@@ -7,9 +7,11 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -33,6 +35,7 @@ public class MainClass
 	{
 		Display display = new Display();
 		Shell shell = new Shell(display);
+		
 		shell.setText("Paint");
 		shell.setLayout(new GridLayout());
 		
@@ -43,6 +46,9 @@ public class MainClass
 		
 		Composite row = new Composite(shell, 0);
 		row.setLayout(layout);
+		
+		Button ColorButton = new Button(row, SWT.PUSH);
+		ColorButton.setText("Select Color");
 		
 		Label t1 = new Label(row,0);
 		t1.setText("Red:");
@@ -62,6 +68,7 @@ public class MainClass
 		Spinner b = new Spinner(row, 0);
 		b.setMaximum(255);
 		b.pack();
+		
 		
 		row.pack();
 		
@@ -157,6 +164,30 @@ public class MainClass
 			}
 		});
 		
+		
+		ColorButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				ColorDialog dialog = new ColorDialog(shell);
+				RGB rgb = dialog.open();
+				red = rgb.red;
+				green = rgb.green;
+				blue = rgb.blue;
+				r.setSelection(red);
+				g.setSelection(green);
+				b.setSelection(blue);
+				gc.setForeground(new Color(null,red,green,blue));
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	
 		
 		
